@@ -32,7 +32,7 @@
         </nav>
 
         <a href="UPXSolaris.html" id="logo-link">
-            <img src="Midias/LogoSolarisPNG.png" alt="logo" class="img-logo">
+            <img src="{{ url_for('static', filename='Img/LogoSolarisPNG.png') }}" alt="logo" class="img-logo">
         </a>
 <!-- Parte do menu do lado direito -->
         <nav class="menu-direita">
@@ -52,7 +52,7 @@
 
     <!-- Imagem de fundo (CSS) -->
     <div class="img-fundo">
-        <img src="Midias/ImgFundo.jpg" alt="imagemFundo">
+        <img src="{{ url_for('static', filename='Img/ImgFundo.jpg') }}" alt="imagemFundo">
         <div class="hero-texto" style="position: absolute; top: 1%; left: 50%; transform: translateX(-50%); text-align: center;">
             <h1>Bem-Vindo ao Grupo Solaris</h1>
             <h2>Veja abaixo nossa história e objetivos!</h2>

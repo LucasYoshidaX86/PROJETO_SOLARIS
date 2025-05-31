@@ -32,7 +32,7 @@
         </nav>
 
         <a href="UPXSolaris.html" id="logo-link">
-            <img src="Midias/LogoSolarisPNG.png" alt="logo" class="img-logo">
+            <img src="{{ url_for('static', filename='Img/LogoSolarisPNG.png') }}" alt="logo" class="img-logo">
         </a>
 
         <nav class="menu-direita">
@@ -47,7 +47,7 @@
     <main>
     <div class="hero">
         <video autoplay muted loop class="bg-video">
-            <source src="Midias/FundoSolaris.mp4" type="video/mp4">
+            <source src="{{ url_for('static', filename='videos/FundoSolaris.mp4') }}" type="video/mp4">
             Seu navegador não suporta vídeo HTML5.
         </video>
         <!-- Títulos do início da página -->
@@ -85,12 +85,12 @@
                 <h2 id="info2">Como funciona a Energia Solar?</h2>
                 <p>O funcionamento da energia solar é baseado na tecnologia dos painéis solares, compostos por células fotovoltaicas feitas de materiais semicondutores, como o silício. Quando a luz do sol atinge essas células, ocorre um movimento de elétrons, gerando corrente elétrica. Essa eletricidade passa por um inversor solar, que adapta a corrente para ser usada nos equipamentos do dia a dia. Quando a produção de energia excede o consumo, o excedente pode ser armazenado em baterias ou injetado na rede elétrica, garantindo economia e estabilidade energética ao consumidor. Tudo isso de forma silenciosa, segura e sustentável.</p>
             </div>
-            <img src="Midias/Esquema.jpeg" alt="Funcionamento Energia Solar">
+            <img src="{{ url_for('static', filename='Img/Esquema.jpg') }}" alt="Funcionamento Energia Solar">
         </div>
 
         <!-- Informações sobre Meio Ambiente e Sustentabilidade -->
         <div class="bloco-texto imagem-esquerda">
-            <img src="Midias/MeioAmbiente.jpg" alt="Sustentabilidade">
+            <img src="{{ url_for('static', filename='Img/MeioAmbiente.jpg') }}" alt="Sustentabilidade">
             <div class="conteudo-texto">
                 <h2 id="info3">Sustentabilidade e Meio Ambiente</h2>
                 <p>Optar pela energia solar é escolher um futuro mais sustentável. Ao contrário das fontes de energia convencionais, que emitem gases poluentes e degradam o meio ambiente, a energia solar é 100% limpa e renovável. Ela contribui para a redução da emissão de dióxido de carbono (CO₂) e outros gases do efeito estufa, ajudando no combate às mudanças climáticas. Além disso, os sistemas solares têm longa durabilidade e demandam pouca manutenção, reduzindo o consumo de recursos naturais ao longo do tempo. Investir em energia solar é investir em um planeta mais verde para as próximas gerações.</p>
@@ -103,7 +103,7 @@
                 <h2 id="info4">Economia com Energia Solar</h2>
                 <p>A energia solar representa uma das maneiras mais inteligentes de reduzir os gastos com energia elétrica. Após a instalação do sistema, as contas de luz podem ter uma redução de até 95%, trazendo um excelente retorno financeiro a médio e longo prazo. Além disso, o sistema fotovoltaico valoriza o imóvel e protege contra os aumentos constantes das tarifas de energia. Com opções de financiamento e linhas de crédito específicas, hoje a energia solar está mais acessível do que nunca, permitindo que cada vez mais pessoas economizem enquanto adotam uma postura consciente em relação ao meio ambiente.</p>
             </div>
-            <img src="Midias/ImagemFotovoltaico.jpg" alt="Economia com Energia Solar">
+            <img src="{{ url_for('static', filename='Img/ImagemFotovoltaico.jpg') }}" alt="Economia com Energia Solar">
         </div>
     </section>
 </div>
