@@ -1,5 +1,4 @@
-
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import json
 import math
@@ -68,10 +67,50 @@ def calcular():
         "dados_sistema": resultado
     })
 
+# Rotas para as páginas
 @app.route('/')
 def index():
-    return send_from_directory('static', 'UPXSolaris.html')
+    return render_template('UPXSolaris.html')
 
-@app.route('/<path:nome_arquivo>')
-def arquivos_estaticos(nome_arquivo):
-    return send_from_directory('static', nome_arquivo)
+@app.route('/calculadora')
+def calculadora():
+    return render_template('CalculadoraSolar.html')
+
+@app.route('/consultoria')
+def consultoria():
+    return render_template('ConsultoriaPersonalizada.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('FAQ.html')
+
+@app.route('/sobre')
+def sobre():
+    return render_template('SobreNos.html')
+
+@app.route('/etapa01')
+def etapa01():
+    return render_template('Etapa01.html')
+
+@app.route('/etapa02')
+def etapa02():
+    return render_template('Etapa02.html')
+
+@app.route('/etapa03')
+def etapa03():
+    return render_template('Etapa03.html')
+
+@app.route('/etapa04')
+def etapa04():
+    return render_template('Etapa04.html')
+
+@app.route('/etapa05')
+def etapa05():
+    return render_template('Etapa05.html')
+
+# Não precisa mais do send_from_directory para HTML!
+
+# Mantém os arquivos estáticos servidos automaticamente pelo Flask em /static
+
+if __name__ == '__main__':
+    app.run(debug=True)
