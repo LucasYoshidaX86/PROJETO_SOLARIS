@@ -1,11 +1,11 @@
-from flask import Flask, render_template, abort
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, render_template, abort, request, jsonify
 from flask_cors import CORS
 import json
 import math
 
 app = Flask(__name__)
 CORS(app)
+
 
 def carregar_json(caminho):
     with open(caminho, encoding='utf-8') as arquivo:
@@ -28,6 +28,7 @@ def calcular_sistema(consumo_mensal, tarifa, hsp):
         "peso_kg": round(peso_estimado, 2)
     }
 
+
 @app.route('/calcular', methods=['POST'])
 def calcular():
     dados = request.get_json()
@@ -36,25 +37,32 @@ def calcular():
     distribuidora_id = dados.get('distribuidora_id')
     consumo = dados.get('consumo')
     tipo_tarifa = dados.get('tipo_tarifa')
+
     estados = carregar_json('estados.json')
     cidades = carregar_json('cidades.json')
     distribuidoras = carregar_json('distribuidoras.json')
     hsp_dados = carregar_json('hsp_estado.json')
+
     estado = next((e for e in estados if e['ID'] == str(estado_id)), None)
     cidade = next((c for c in cidades if c['ID'] == str(cidade_id)), None)
     distribuidora = next((d for d in distribuidoras if d['ID'] == distribuidora_id), None)
     hsp_info = next((h for h in hsp_dados if h['Estado'] == int(estado_id)), None)
+
     if not (estado and cidade and distribuidora and hsp_info):
         return jsonify({"erro": "Dados não encontrados."}), 404
+
     hsp = hsp_info['hsp_estado']
     tarifa = distribuidora[tipo_tarifa]
+
     resultado = calcular_sistema(consumo, tarifa, hsp)
+
     co2_reduzido = resultado['producao_anual_kwh'] * 0.001747
     arvores_equivalentes = resultado['producao_anual_kwh'] * 0.000012
     km_evitados = resultado['producao_anual_kwh'] * 0.1
     economia_mensal = consumo * tarifa
     economia_30_anos = economia_mensal * 12 * 30
     economia_acumulada = [round(economia_mensal * 12 * ano, 2) for ano in range(2, 32, 2)]
+
     return jsonify({
         "estado": estado['Nome'],
         "cidade": cidade['Nome'],
@@ -68,31 +76,50 @@ def calcular():
         "dados_sistema": resultado
     })
 
-TEMPLATES = [
-    "UPXSolaris.html",
-    "CalculadoraSolar.html",
-    "ConsultoriaPersonalizada.html",
-    "Etapa01.html",
-    "Etapa02.html",
-    "Etapa03.html",
-    "Etapa04.html",
-    "Etapa05.html",
-    "FAQ.html",
-    "SobreNos.html"
-]
 
 @app.route('/')
 def index():
     return render_template('UPXSolaris.html')
 
-@app.route('/<nome_arquivo>')
-def renderizar_template(nome_arquivo):
-    if not nome_arquivo.endswith('.html'):
-        abort(404)
-    if nome_arquivo in TEMPLATES:
-        return render_template(nome_arquivo)
-    else:
-        abort(404)
-        
+@app.route('/calculadora')
+def calculadora():
+    return render_template('CalculadoraSolar.html')
+
+@app.route('/consultoria-personalizada')
+def consultoria_personalizada():
+    return render_template('ConsultoriaPersonalizada.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('FAQ.html')
+
+@app.route('/sobre-nos')
+def sobre_nos():
+    return render_template('SobreNos.html')
+
+
+@app.route('/etapa01')
+def etapa01():
+    return render_template('Etapa01.html')
+
+@app.route('/etapa02')
+def etapa02():
+    return render_template('Etapa02.html')
+
+@app.route('/etapa03')
+def etapa03():
+    return render_template('Etapa03.html')
+
+@app.route('/etapa04')
+def etapa04():
+    return render_template('Etapa04.html')
+
+@app.route('/etapa05')
+def etapa05():
+    return render_template('Etapa05.html')
+
+# ------------------------------
+
 if __name__ == '__main__':
     app.run(debug=True)
+
