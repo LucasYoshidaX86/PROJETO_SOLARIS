@@ -51,8 +51,7 @@
         <div id="container-etapas"></div>
     </div>
 
-    <script src="JavaScript/Calculadora.js" defer></script>
-    <script src="JavaScript/SolarisScript.js" defer></script>
+    <script src="{{ url_for('static', filename='Js/Calculadora.js') }}" defer></script>
     <script>
         window.onload = () => {
             carregarEtapa1();
@@ -63,7 +62,7 @@
 
     <!-- Parte do footer puxado com JavaScript -->
     <div id="footer">
-        <script src="JavaScript/SolarisScript.js" defer></script>
+        <script src="{{ url_for('static', filename='Js/SolarisScript.js') }}" defer></script>
     </div>
     
 </body>
