@@ -286,15 +286,18 @@ function carregarEtapa5() {
             .then(res => res.json())
             .then(dados => {
                 preencherCards(dados);
-                inicializarGrafico();
-                atualizarGrafico(dados.economia_acumulada);
+
+            requestAnimationFrame(() => {
+            inicializarGrafico();
+            atualizarGrafico(dados.economia_acumulada);
+         });
+
+            btnGrafico.addEventListener('click', () => {
+            document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
+         });
+    })
 
 
-                // Evento gráfico
-                btnGrafico.addEventListener('click', () => {
-                    document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
-                });
-            })
             .catch(erro => {
                 console.error('Erro na requisição:', erro);
             });
