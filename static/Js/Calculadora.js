@@ -17,15 +17,15 @@ function carregarEstilo(cssFile) {
 
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = `Styles/${cssFile}`;
+    link.href = cssFile;
     link.id = 'estilo-etapa';
     document.head.appendChild(link);
 }
 
 // ================= ETAPA 1 =================
 function carregarEtapa1() {
-    carregarEstilo('StylesCalculadoraE01.css');
-    fetch("ETAPASCALCULADORA/Etapa01.html")
+    carregarEstilo('/static/Styles/StylesCalculadoraE01.css');
+    fetch("/static/etapas/Etapa01.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
@@ -68,8 +68,8 @@ function carregarEtapa1() {
 
 function carregarDadosEstadosECidades() {
     return Promise.all([
-        fetch('ETAPASCALCULADORA/Estados.json').then(res => res.json()).then(data => estados = data),
-        fetch('ETAPASCALCULADORA/Cidades.json').then(res => res.json()).then(data => cidades = data)
+        fetch('/static/Json/Estados.json').then(res => res.json()).then(data => estados = data),
+        fetch('/static/Json/Cidades.json').then(res => res.json()).then(data => cidades = data)
     ]);
 }
 
@@ -96,8 +96,8 @@ function popularCidades(idEstado, select) {
 
 // ================= ETAPA 2 =================
 function carregarEtapa2() {
-    carregarEstilo('StylesCalculadoraE02.css');
-    fetch("ETAPASCALCULADORA/Etapa02.html")
+    carregarEstilo('/static/Styles/StylesCalculadoraE02.css');
+    fetch("/static/etapas/Etapa02.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
@@ -133,8 +133,8 @@ function carregarEtapa2() {
 
 // ================= ETAPA 3 =================
 function carregarEtapa3() {
-    carregarEstilo('StylesCalculadoraE03.css');
-    fetch("ETAPASCALCULADORA/Etapa03.html")
+    carregarEstilo('/static/Styles/StylesCalculadoraE03.css');
+    fetch("/static/etapas/Etapa03.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
@@ -201,7 +201,7 @@ function carregarEtapa3() {
 }
 
 function carregarDistribuidoras() {
-    return fetch('ETAPASCALCULADORA/distribuidoras.json')
+    return fetch('/static/Json/distribuidoras.json')
         .then(res => res.json())
         .then(data => distribuidoras = data.filter(d => d.Estado == respostasUsuario.etapa1.estado));
 }
@@ -218,8 +218,8 @@ function popularDistribuidoras(select) {
 
 // ================= ETAPA 4 =================
 function carregarEtapa4() {
-    carregarEstilo('StylesCalculadoraE04.css');
-    fetch("ETAPASCALCULADORA/Etapa04.html")
+    carregarEstilo('/static/Styles/StylesCalculadoraE04.css');
+    fetch("/static/etapas/Etapa04.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
@@ -263,17 +263,16 @@ function carregarEtapa4() {
 
 // ================= ETAPA 5 =================
 function carregarEtapa5() {
-    carregarEstilo('StylesCalculadoraE05.css');
-    fetch("ETAPASCALCULADORA/Etapa05.html")
+    carregarEstilo('/static/Styles/StylesCalculadoraE05.css');
+    fetch("/static/etapas/Etapa05.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
 
             const btnVoltar = document.getElementById("btnVoltar");
             const btnGrafico = document.getElementById("btnVerGrafico");
-            const btnPDF = document.getElementById("btnGerarPDF");
 
-            fetch(`http://127.0.0.1:5000/calcular`, {
+            fetch(`/calcular`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -290,44 +289,6 @@ function carregarEtapa5() {
                 inicializarGrafico();
                 atualizarGrafico(dados.economia_acumulada_anos);
 
-                // Evento PDF deve estar aqui dentro!
-                btnPDF.addEventListener('click', () => {
-                    fetch('http://127.0.0.1:5000/gerar-pdf', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            estado: dados.estado,
-                            cidade: dados.cidade,
-                            distribuidora: dados.distribuidora,
-
-                            potencia_sugerida_kwp: dados.potencia_sugerida_kwp,
-                            numero_de_modulos: dados.numero_de_modulos,
-                            producao_anual_kwh: dados.producao_anual_kwh,
-                            area_necessaria_m2: dados.area_necessaria_m2,
-                            peso_estimado_kg: dados.peso_estimado_kg,
-
-                            economia_mensal_reais: dados.economia_mensal_reais,
-                            economia_30_anos_reais: dados.economia_30_anos_reais,
-
-                            co2_reduzido_kg: dados.co2_reduzido_kg,
-                            arvores_equivalentes: dados.arvores_equivalentes,
-                            km_evitados: dados.km_evitados
-                        })
-                    })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = "relatorio_simulacao.pdf";
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    })
-                    .catch(error => {
-                        console.error('Erro ao gerar PDF:', error);
-                    });
-                });
 
                 // Evento gráfico
                 btnGrafico.addEventListener('click', () => {

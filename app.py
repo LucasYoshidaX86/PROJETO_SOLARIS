@@ -38,10 +38,10 @@ def calcular():
     consumo = dados.get('consumo')
     tipo_tarifa = dados.get('tipo_tarifa')
 
-    estados = carregar_json('estados.json')
-    cidades = carregar_json('cidades.json')
-    distribuidoras = carregar_json('distribuidoras.json')
-    hsp_dados = carregar_json('hsp_estado.json')
+    estados = carregar_json('static/Json/estados.json')
+    cidades = carregar_json('static/Json/cidades.json')
+    distribuidoras = carregar_json('static/Json/distribuidoras.json')
+    hsp_dados = carregar_json('static/Json/hsp_estado.json')
 
     estado = next((e for e in estados if e['ID'] == str(estado_id)), None)
     cidade = next((c for c in cidades if c['ID'] == str(cidade_id)), None)
@@ -97,26 +97,6 @@ def faq():
 def sobre_nos():
     return render_template('SobreNos.html')
 
-
-@app.route('/etapa01')
-def etapa01():
-    return render_template('Etapa01.html')
-
-@app.route('/etapa02')
-def etapa02():
-    return render_template('Etapa02.html')
-
-@app.route('/etapa03')
-def etapa03():
-    return render_template('Etapa03.html')
-
-@app.route('/etapa04')
-def etapa04():
-    return render_template('Etapa04.html')
-
-@app.route('/etapa05')
-def etapa05():
-    return render_template('Etapa05.html')
 
 # ------------------------------
 
