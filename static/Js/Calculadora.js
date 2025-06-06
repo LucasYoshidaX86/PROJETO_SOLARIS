@@ -270,48 +270,43 @@ function carregarEtapa5() {
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
 
-            // Inicia o observer logo após carregar o HTML
-            const observer = new MutationObserver(() => {
-                const canvas = document.getElementById("graficoCanvas");
+            requestAnimationFrame(() => {
+                
                 const btnVoltar = document.getElementById("btnVoltar");
                 const btnGrafico = document.getElementById("btnVerGrafico");
 
-                if (canvas && btnVoltar && btnGrafico) {
-                    observer.disconnect(); // desliga o observer
+                btnVoltar.addEventListener('click', carregarEtapa4);
 
-                    // Agora que o DOM já carregou tudo, podemos adicionar os eventos normalmente
-                    btnVoltar.addEventListener('click', carregarEtapa4);
-
-                    fetch(`/calcular`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            estado_id: respostasUsuario.etapa1.estado,
-                            cidade_id: respostasUsuario.etapa1.cidade,
-                            distribuidora_id: respostasUsuario.etapa3.distribuidora,
-                            consumo: respostasUsuario.etapa4.gasto,
-                            tipo_tarifa: respostasUsuario.etapa2.tipo
-                        })
+                fetch(`/calcular`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        estado_id: respostasUsuario.etapa1.estado,
+                        cidade_id: respostasUsuario.etapa1.cidade,
+                        distribuidora_id: respostasUsuario.etapa3.distribuidora,
+                        consumo: respostasUsuario.etapa4.gasto,
+                        tipo_tarifa: respostasUsuario.etapa2.tipo
                     })
-                    .then(res => res.json())
-                    .then(dados => {
-                        preencherCards(dados);
-                        inicializarGrafico();
-                        atualizarGrafico(dados.economia_acumulada);
+                })
+                .then(res => res.json())
+                .then(dados => {
+                    preencherCards(dados);
 
-                        btnGrafico.addEventListener('click', () => {
-                            document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
-                        });
-                    })
-                    .catch(erro => {
-                        console.error('Erro na requisição:', erro);
+                    inicializarGrafico();
+                    atualizarGrafico(dados.economia_acumulada);
+
+                    btnGrafico.addEventListener('click', () => {
+                        document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
                     });
-                }
-            });
+                })
+                .catch(erro => {
+                    console.error('Erro na requisição:', erro);
+                });
 
-            observer.observe(document.getElementById("container-etapas"), { childList: true, subtree: true });
+            });
         });
 }
+
 
 
 
