@@ -2,6 +2,8 @@ from flask import Flask, render_template, abort, request, jsonify
 from flask_cors import CORS
 import json
 import math
+import matplotlib
+matplotlib.use('Agg')  # <- importante para rodar no Render
 import matplotlib.pyplot as plt
 import io
 from io import BytesIO
@@ -83,8 +85,9 @@ def calcular():
         "economia_acumulada": economia_acumulada,
         "dados_sistema": resultado
     })
-    
-    def gerar_grafico(economia_acumulada):
+
+# Função auxiliar, caso queira usar depois
+def gerar_grafico(economia_acumulada):
     plt.figure(figsize=(6, 4))
     anos = list(range(2, 32, 2))
     plt.plot(anos, economia_acumulada, marker='o', color='#ffbb00')
