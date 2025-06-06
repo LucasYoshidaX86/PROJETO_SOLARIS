@@ -306,29 +306,29 @@ function carregarEtapa5() {
 
 function preencherCards(dados) {
     document.getElementById("investimento").innerHTML = `
-        <p>Potência Sugerida: <span>${dados.potencia_sugerida_kwp} kWp</span></p>
-        <p>Número de Módulos: <span>${dados.numero_de_modulos}</span></p>
-        <p>Produção Anual: <span>${dados.producao_anual_kwh} kWh</span></p>
-        <p>Área Necessária: <span>${dados.area_necessaria_m2} m²</span></p>
-        <p>Peso Estimado: <span>${dados.peso_estimado_kg} kg</span></p>
-        <p><strong>Investimento Estimado:</strong> <span>R$ ${dados.investimento_total_reais.toLocaleString('pt-BR')}</span></p>
+        <p>Potência Sugerida: <span>${dados.dados_sistema.potencia_kwp} kWp</span></p>
+        <p>Número de Módulos: <span>${dados.dados_sistema.num_modulos}</span></p>
+        <p>Produção Anual: <span>${dados.dados_sistema.producao_anual_kwh} kWh</span></p>
+        <p>Área Necessária: <span>${dados.dados_sistema.area_m2} m²</span></p>
+        <p>Peso Estimado: <span>${dados.dados_sistema.peso_kg} kg</span></p>
     `;
 
     document.getElementById("economia").innerHTML = `
         <p><strong>Estado:</strong> <span>${dados.estado}</span></p>
         <p><strong>Cidade:</strong> <span>${dados.cidade}</span></p>
         <p><strong>Distribuidora:</strong> <span>${dados.distribuidora}</span></p>
-        <p><strong>Tarifa utilizada:</strong> <span>R$ ${dados.tarifa_utilizada.toFixed(2)} /kWh</span></p>
-        <p><strong>Consumo Mensal Informado:</strong> <span>${dados.consumo_mensal_kwh} kWh</span></p>
+        <p><strong>Tarifa utilizada:</strong> <span>R$ ${dados.tarifa.toFixed(2)} /kWh</span></p>
+        <p><strong>Consumo Mensal Informado:</strong> <span>${dados.consumo} kWh</span></p>
         <hr>
-        <p>Economia Mensal: <span>R$ ${dados.economia_mensal_reais.toLocaleString('pt-BR')}</span></p>
-        <p>Economia em 30 Anos: <span>R$ ${dados.economia_30_anos_reais.toLocaleString('pt-BR')}</span></p>
+        <p>Economia Mensal: <span>R$ ${dados.economia_mensal.toLocaleString('pt-BR')}</span></p>
+        <p>Economia em 30 Anos: <span>R$ ${dados.economia_30_anos.toLocaleString('pt-BR')}</span></p>
     `;
 
     document.getElementById("ambiental").innerHTML = `
-        <p>Redução de CO₂: <span>${dados.co2_reduzido_kg} kg/ano</span></p>
+        <p>Redução de CO₂: <span>${dados.co2_reduzido} kg/ano</span></p>
         <p>Árvores Plantadas Equivalentes: <span>${dados.arvores_equivalentes}</span></p>
-        <p>Cobertura Média Residencial: <span>${dados.cobertura_percentual}%</span></p>
+        <p>Cobertura Média Residencial: <span>---</span></p>
         <p>Km Evitados: <span>${dados.km_evitados} km/ano</span></p>
     `;
 }
+

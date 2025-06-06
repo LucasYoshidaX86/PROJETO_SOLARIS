@@ -6,7 +6,6 @@ import math
 app = Flask(__name__)
 CORS(app)
 
-
 def carregar_json(caminho):
     with open(caminho, encoding='utf-8') as arquivo:
         return json.load(arquivo)
@@ -27,7 +26,6 @@ def calcular_sistema(consumo_mensal, tarifa, hsp):
         "area_m2": round(area_necessaria, 2),
         "peso_kg": round(peso_estimado, 2)
     }
-
 
 @app.route('/calcular', methods=['POST'])
 def calcular():
@@ -66,7 +64,9 @@ def calcular():
     return jsonify({
         "estado": estado['Nome'],
         "cidade": cidade['Nome'],
+        "distribuidora": distribuidora['Nome'],
         "tarifa": tarifa,
+        "consumo": consumo,
         "economia_mensal": round(economia_mensal, 2),
         "economia_30_anos": round(economia_30_anos, 2),
         "co2_reduzido": round(co2_reduzido, 2),
@@ -75,7 +75,6 @@ def calcular():
         "economia_acumulada": economia_acumulada,
         "dados_sistema": resultado
     })
-
 
 @app.route('/')
 def index():
@@ -97,9 +96,7 @@ def faq():
 def sobre_nos():
     return render_template('SobreNos.html')
 
-
-# ------------------------------
-
 if __name__ == '__main__':
     app.run(debug=True)
+
 
