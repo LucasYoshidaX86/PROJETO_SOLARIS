@@ -264,46 +264,55 @@ function carregarEtapa4() {
 // ================= ETAPA 5 =================
 function carregarEtapa5() {
     carregarEstilo('/static/Styles/StylesCalculadoraE05.css');
-    
+
     fetch("/static/etapas/Etapa05.html")
         .then(res => res.text())
         .then(html => {
             document.getElementById("container-etapas").innerHTML = html;
 
-            const btnVoltar = document.getElementById("btnVoltar");
-            const btnGrafico = document.getElementById("btnVerGrafico");
+            // Inicia o observer logo após carregar o HTML
+            const observer = new MutationObserver(() => {
+                const canvas = document.getElementById("graficoCanvas");
+                const btnVoltar = document.getElementById("btnVoltar");
+                const btnGrafico = document.getElementById("btnVerGrafico");
 
-            btnVoltar.addEventListener('click', carregarEtapa4);
+                if (canvas && btnVoltar && btnGrafico) {
+                    observer.disconnect(); // desliga o observer
 
-            setTimeout(() => {
-                fetch(`/calcular`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        estado_id: respostasUsuario.etapa1.estado,
-                        cidade_id: respostasUsuario.etapa1.cidade,
-                        distribuidora_id: respostasUsuario.etapa3.distribuidora,
-                        consumo: respostasUsuario.etapa4.gasto,
-                        tipo_tarifa: respostasUsuario.etapa2.tipo
+                    // Agora que o DOM já carregou tudo, podemos adicionar os eventos normalmente
+                    btnVoltar.addEventListener('click', carregarEtapa4);
+
+                    fetch(`/calcular`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            estado_id: respostasUsuario.etapa1.estado,
+                            cidade_id: respostasUsuario.etapa1.cidade,
+                            distribuidora_id: respostasUsuario.etapa3.distribuidora,
+                            consumo: respostasUsuario.etapa4.gasto,
+                            tipo_tarifa: respostasUsuario.etapa2.tipo
+                        })
                     })
-                })
-                .then(res => res.json())
-                .then(dados => {
-                    preencherCards(dados);
-                    inicializarGrafico();
-                    atualizarGrafico(dados.economia_acumulada);
+                    .then(res => res.json())
+                    .then(dados => {
+                        preencherCards(dados);
+                        inicializarGrafico();
+                        atualizarGrafico(dados.economia_acumulada);
 
-                    btnGrafico.addEventListener('click', () => {
-                        document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
+                        btnGrafico.addEventListener('click', () => {
+                            document.getElementById('grafico').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    })
+                    .catch(erro => {
+                        console.error('Erro na requisição:', erro);
                     });
-                })
-                .catch(erro => {
-                    console.error('Erro na requisição:', erro);
-                });
+                }
+            });
 
-            }, 100);
+            observer.observe(document.getElementById("container-etapas"), { childList: true, subtree: true });
         });
 }
+
 
 
 
