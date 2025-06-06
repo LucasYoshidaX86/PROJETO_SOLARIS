@@ -68,8 +68,8 @@ function carregarEtapa1() {
 
 function carregarDadosEstadosECidades() {
     return Promise.all([
-        fetch('/static/json/Estados.json').then(res => res.json()).then(data => estados = data),
-        fetch('/static/json/Cidades.json').then(res => res.json()).then(data => cidades = data)
+        fetch('/static/json/estados.json').then(res => res.json()).then(data => estados = data),
+        fetch('/static/json/cidades.json').then(res => res.json()).then(data => cidades = data)
     ]);
 }
 
