@@ -38,10 +38,10 @@ def calcular():
     consumo = dados.get('consumo')
     tipo_tarifa = dados.get('tipo_tarifa')
 
-    estados = carregar_json('static/Json/estados.json')
-    cidades = carregar_json('static/Json/cidades.json')
-    distribuidoras = carregar_json('static/Json/distribuidoras.json')
-    hsp_dados = carregar_json('static/Json/hsp_estado.json')
+    estados = carregar_json('static/json/estados.json')
+    cidades = carregar_json('static/json/cidades.json')
+    distribuidoras = carregar_json('static/json/distribuidoras.json')
+    hsp_dados = carregar_json('static/json/hsp_estado.json')
 
     estado = next((e for e in estados if e['ID'] == str(estado_id)), None)
     cidade = next((c for c in cidades if c['ID'] == str(cidade_id)), None)
