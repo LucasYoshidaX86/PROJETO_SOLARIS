@@ -2,6 +2,14 @@ from flask import Flask, render_template, abort, request, jsonify
 from flask_cors import CORS
 import json
 import math
+import matplotlib.pyplot as plt
+import io
+from io import BytesIO
+from datetime import datetime
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import cm
+from reportlab.platypus import Image
 
 app = Flask(__name__)
 CORS(app)
@@ -75,6 +83,22 @@ def calcular():
         "economia_acumulada": economia_acumulada,
         "dados_sistema": resultado
     })
+    
+    def gerar_grafico(economia_acumulada):
+    plt.figure(figsize=(6, 4))
+    anos = list(range(2, 32, 2))
+    plt.plot(anos, economia_acumulada, marker='o', color='#ffbb00')
+    plt.fill_between(anos, economia_acumulada, color='#ffbb00', alpha=0.2)
+    plt.title('Economia Acumulada (R$)')
+    plt.xlabel('Anos')
+    plt.ylabel('Valor (R$)')
+    plt.grid(True)
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close()
+    buf.seek(0)
+    return buf
 
 @app.route('/')
 def index():
