@@ -17,15 +17,15 @@
       <!-- Opções -->
       <div class="form-linha">
         <div class="opcao" id="tarifa_residencial">
-          <img src="Midias/house.svg" alt="Residencial">
+          <img src="{{ url_for('static', filename='Img/house.svg') }}" alt="Residencial">
           <label>Residencial</label>
         </div>
         <div class="opcao" id="tarifa_empresarial">
-          <img src="Midias/buildings.svg" alt="Empresarial">
+          <img src="{{ url_for('static', filename='Img/buildings.svg') }}" alt="Empresarial">
           <label>Empresarial</label>
         </div>
         <div class="opcao" id="tarifa_outro">
-          <img src="Midias/patch-question.svg" alt="Outro">
+          <img src="{{ url_for('static', filename='Img/patch-question.svg') }}" alt="Outro">
           <label>Outro</label>
         </div>
       </div>

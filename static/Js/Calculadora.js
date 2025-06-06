@@ -201,7 +201,7 @@ function carregarEtapa3() {
 }
 
 function carregarDistribuidoras() {
-    return fetch('/static/Json/distribuidoras.json')
+    return fetch('/static/json/distribuidoras.json')
         .then(res => res.json())
         .then(data => distribuidoras = data.filter(d => d.Estado == respostasUsuario.etapa1.estado));
 }
