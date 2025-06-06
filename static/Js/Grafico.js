@@ -24,7 +24,14 @@ function inicializarGrafico() {
         options: {
             responsive: true,
             plugins: {
-                legend: { display: true, position: 'top' }
+                legend: { display: true, position: 'top' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'R$ ' + context.parsed.y.toLocaleString('pt-BR');
+                        }
+                    }
+                }
             },
             scales: {
                 y: {
@@ -42,19 +49,7 @@ function inicializarGrafico() {
 
 function atualizarGrafico(novosDados) {
     if (grafico) {
-        const dadosComVariacao = novosDados.map((valor, index) => {
-            const variacaoPercentual = 0.2; // 20%
-            
-            // Gera um fator de variação aleatório entre -20% e +20%
-            const fatorVariacao = (Math.random() * 2 - 1) * variacaoPercentual;
-
-            // Aplica a variação no valor
-            const valorComVariacao = valor + (valor * fatorVariacao);
-
-            return Math.round(valorComVariacao);
-        });
-
-        grafico.data.datasets[0].data = dadosComVariacao;
+        grafico.data.datasets[0].data = novosDados;
         grafico.update();
     }
 }
@@ -66,3 +61,4 @@ function gerarLabelsAnos() {
     }
     return labels;
 }
+

@@ -287,7 +287,7 @@ function carregarEtapa5() {
             .then(dados => {
                 preencherCards(dados);
                 inicializarGrafico();
-                atualizarGrafico(dados.economia_acumulada_anos);
+                atualizarGrafico(dados.economia_acumulada);
 
 
                 // Evento gráfico
